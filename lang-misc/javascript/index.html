@@ -117,7 +117,7 @@
     log(ele()) // undefined
 
 
-    // challange 5
+    log("---- challange 5 ----")
     const collect = (gen, arr) => () => {
       val = gen()
       if(val !== undefined){
@@ -132,6 +132,69 @@
     log(col()) // 1
     log(col()) // undefined
     log(arr)   // [1,2]
+
+
+    log("---- challange 6 ----")
+    const filter = (gen, pred) => () => {
+      do{
+          val = gen();
+        } while(val !== undefined && !pred(val));
+        return val;
+    }
+
+    var fil = filter(fromTo(0,5),
+        function third(value){
+          return (value % 3) === 0;
+        });
+
+    log(fil()) // 0
+    log(fil()) // 3
+    log(fil()) // undefined
+
+    const concat = (gen1, gen2) => {
+      let gen = gen1
+      return function(){
+        val = gen()
+        if(val === undefined){
+          gen = gen2
+          val = gen()
+        }
+        return val
+      }
+    }
+    const con = concat(fromTo(0,3),fromTo(0,2))
+    log(con()) // 0
+    log(con()) // 1
+    log(con()) // 2
+    log(con()) // 0
+    log(con()) // 1
+    log(con()) // undefined
+
+    const gensymf = (prefix) => {
+      const gen = from(1);
+      return () => {
+        value = gen();
+        return `${prefix}${value}`
+      }
+    }
+
+    var geng = gensymf("G"),
+        genh = gensymf("H");
+
+    log(geng()) // G1
+    log(genh()) // H1
+    log(geng()) // G2
+    log(genh()) // H2
+
+    const gensymff = (unary, seed) => {
+      return (prefix) => {
+        return () => {
+          const number = unary(number);
+          return `${prefix}${number}`;
+        };
+      };
+    };
+
 
 
   </script>
