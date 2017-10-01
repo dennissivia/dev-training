@@ -1,10 +1,9 @@
 module Lib (strToUpper, fullName, runUserExample) where
 
-import qualified Data.Char
-import           Data.List
 import qualified Data.Map.Lazy   as ML
+import           Data.List
 import qualified Data.Map.Strict as MS
-
+import qualified Data.Char
 
 data Person = Person { firstName :: String
                      , lastName  :: String
@@ -41,7 +40,7 @@ containsA = isInfixOf "a"
 checkMaybe :: Maybe String -> String
 checkMaybe m =
   case m of
-    Nothing -> "Oh no"
+    Nothing   -> "Oh no"
     Just name -> "Yeah " ++ name
 
 strToUpper :: String -> String
