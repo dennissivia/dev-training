@@ -1,17 +1,14 @@
-module Lib () where
+module Lib (strToUpper, fullName, runUserExample) where
 
-import qualified Data.Maybe
-import Data.List
-import Control.Monad
 import qualified Data.Char
-import qualified Data.Map
+import           Data.List
+import qualified Data.Map.Lazy   as ML
+import qualified Data.Map.Strict as MS
 
--- import qualified Data.Map as Map
--- import Data.Map.Lazy
 
 data Person = Person { firstName :: String
-                     , lastName :: String
-                     , age :: Int
+                     , lastName  :: String
+                     , age       :: Int
                      } deriving (Show)
 
 data Address = Address { street :: String
@@ -47,14 +44,11 @@ checkMaybe m =
     Nothing -> "Oh no"
     Just name -> "Yeah " ++ name
 
-
-uppercase :: String -> String
-uppercase = map Data.Char.toUpper
-
-str = find containsA userNames
+strToUpper :: String -> String
+strToUpper = map Data.Char.toUpper
 
 fullName :: String -> String -> String
-fullName first last = first ++ " " ++ last
+fullName f l = f ++ " " ++ l
 
 
 fmap2 :: (String -> String -> String) -> Maybe String -> Maybe String -> Maybe String
@@ -66,7 +60,28 @@ fmap2 f m1 m2 =
         Nothing -> Nothing
         Just v2 -> Just $ f v1 v2
 
+first_ :: Maybe String
 first_ = Just "jane"
+
+last_ :: Maybe String
 last_ = Just "doe"
 
--- fmap2 full_name first last
+str :: Maybe String
+str = find containsA userNames
+
+runUserExample :: Maybe String
+runUserExample = fmap2 fullName first_ last_
+
+freq =
+  let
+    grouped = groupBy (\x y -> (head x) == (head y)) $ sort ["foo", "bar", "baz"]
+    counted = map (\l -> (head $ head l, length l)) grouped
+  in
+    MS.fromList counted
+
+freq2 =
+  let
+    grouped = groupBy (\x y -> (head x) == (head y)) $ sort ["foo", "bar", "baz"]
+    paired  = map (\l -> (head $ head l, l)) grouped
+  in
+    MS.fromList paired
