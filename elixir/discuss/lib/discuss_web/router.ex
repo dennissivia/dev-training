@@ -8,6 +8,16 @@ defmodule DiscussWeb.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug Discuss.Plugs.SetUser
+    plug :put_user_token
+  end
+
+  defp put_user_token(conn, _) do
+    if current_user = conn.assigns.user do
+      token = Phoenix.Token.sign(conn, "key", current_user.id)
+      assign(conn, :user_token, token)
+    else
+      conn
+    end
   end
 
   pipeline :api do

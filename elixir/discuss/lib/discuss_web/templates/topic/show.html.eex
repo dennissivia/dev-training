@@ -1,13 +1,18 @@
-<h2>Show Topic</h2>
+<h5>Title: <%= @topic.title %> </h5>
 
-<ul>
+<div class="input-field">
+    <textarea class="materialize-textarea"></textarea>
+    <button class="btn">Add comment</button>
+</div>
+<ul class="collection"> </ul>
 
-  <li>
-    <strong>Title:</strong>
-    <%= @topic.title %>
-  </li>
+<script>
+  document.addEventListener("DOMContentLoaded",function(){
+   window.createSocket(<%= @topic.id %>)
+  });
+</script>
 
-</ul>
-
-<span><%= link "Edit", to: topic_path(@conn, :edit, @topic) %></span>
-<span><%= link "Back", to: topic_path(@conn, :index) %></span>
+<div>
+    <span><%= link "Edit", to: topic_path(@conn, :edit, @topic) %></span>
+    <span><%= link "Back", to: topic_path(@conn, :index) %></span>
+</div>
