@@ -1,9 +1,9 @@
 module Lib (strToUpper, fullName, runUserExample) where
 
-import qualified Data.Map.Lazy   as ML
+import qualified Data.Map
 import           Data.List
-import qualified Data.Map.Strict as MS
 import qualified Data.Char
+import Control.Monad
 
 data Person = Person { firstName :: String
                      , lastName  :: String
@@ -71,16 +71,21 @@ str = find containsA userNames
 runUserExample :: Maybe String
 runUserExample = fmap2 fullName first_ last_
 
-freq =
+freq :: [String] -> Data.Map.Map Char Int
+freq xs =
   let
-    grouped = groupBy (\x y -> (head x) == (head y)) $ sort ["foo", "bar", "baz"]
+    grouped = groupBy (\x y -> (head x) == (head y)) $ sort xs
     counted = map (\l -> (head $ head l, length l)) grouped
   in
-    MS.fromList counted
+    Data.Map.fromList counted
 
-freq2 =
+freq2 :: [String] -> Data.Map.Map Char [[Char]]
+freq2 xs =
   let
-    grouped = groupBy (\x y -> (head x) == (head y)) $ sort ["foo", "bar", "baz"]
+    grouped = groupBy (\x y -> (head x) == (head y)) $ sort xs
     paired  = map (\l -> (head $ head l, l)) grouped
   in
-    MS.fromList paired
+    Data.Map.fromList paired
+
+animals :: IO [String]
+animals = (liftM words) $ readFile "animals.txt"

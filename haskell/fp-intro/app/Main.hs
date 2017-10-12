@@ -1,7 +1,7 @@
 module Main where
-import Control.Monad
-import Lib
 
+import           Control.Monad
+import           Lib
 
 splitData = words
 
@@ -14,8 +14,6 @@ getAnimals = getContents
 
 main :: IO ()
 main =
-  let
-    f = reduceData . mapData . splitData
-  in
-    fmap f getAnimals >>= putStrLn
+  let f = reduceData . mapData . splitData
+  in fmap f getAnimals >>= putStrLn
     -- putStrLn "foo"
