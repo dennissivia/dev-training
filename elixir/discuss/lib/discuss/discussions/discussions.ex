@@ -50,10 +50,14 @@ defmodule Discuss.Discussions do
 
   """
   def create_comment(topic, user_id, attrs \\ %{}) do
-    topic
+    result = topic
     |> Ecto.build_assoc(:comments, user_id: user_id)
     |> Comment.changeset(attrs)
     |> Repo.insert()
+    case result do
+      {:ok, comment} -> {:ok, comment |> Repo.preload(:user) }
+      error -> error
+    end
   end
 
   @doc """
