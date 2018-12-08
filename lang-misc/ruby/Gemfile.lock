@@ -3,7 +3,7 @@ GEM
   specs:
     coderay (1.1.0)
     diff-lcs (1.2.5)
-    ffi (1.9.10)
+    ffi (1.9.25)
     formatador (0.2.5)
     guard (2.13.0)
       formatador (>= 0.2.4)
@@ -60,4 +60,4 @@ DEPENDENCIES
   rspec
 
 BUNDLED WITH
-   1.11.2
+   1.16.2
