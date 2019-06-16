@@ -20,7 +20,7 @@ def addJob(queue, handler, *handlerArgs):
     queue.append((handler, *handlerArgs))
 
 
-def runJobs(queue, registry):
+def dispatchJobs(queue, registry):
     name = threading.currentThread().name
     prefix = '[{}] '.format(name)
     time.sleep(10)
@@ -64,9 +64,9 @@ def main():
         registry = dict()
         taskQueue = []
         max_threads = 2  # small for testing
-        runner = threading.Thread(name="runner thread", target=runJobs, args=(
+        dispatcher = threading.Thread(name="dispatch thread", target=dispatchJobs, args=(
             taskQueue, registry,), daemon=True)
-        runner.start()
+        dispatcher.start()
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
         sock.bind(("127.0.0.1", 1234))
